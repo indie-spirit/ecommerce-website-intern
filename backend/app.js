@@ -1,5 +1,5 @@
 import express, { json } from 'express';
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import router from './src/routes/index.js';
 
@@ -7,8 +7,7 @@ dotenv.config();
 
 let app = express();
 const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(() => {
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
   console.log("Database Connected");
 });
 
