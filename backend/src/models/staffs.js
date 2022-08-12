@@ -27,7 +27,7 @@ const StaffsSchema = new mongoose.Schema({
     },
     dep_id: {
         type: String,
-        required: false
+        required: true
     }
 });
 
