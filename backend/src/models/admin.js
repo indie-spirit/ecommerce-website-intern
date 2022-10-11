@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const StaffsSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
     _id: {
         type: Number,
         required: true
@@ -8,7 +8,7 @@ const StaffsSchema = new mongoose.Schema({
     name: {
        type: String,
        required: true
-   },
+    },
     email: {
         type: String,
         required: true
@@ -24,13 +24,9 @@ const StaffsSchema = new mongoose.Schema({
     password: {
         type: String,
         required: false
-    },
-    dep_id: {
-        type: String,
-        required: true
     }
 });
 
-const Staffs= new mongoose.model("Staffs", StaffsSchema);
+const Admin = new mongoose.model("Admin", AdminSchema);
 
-export default Staffs;
+export default Admin;
