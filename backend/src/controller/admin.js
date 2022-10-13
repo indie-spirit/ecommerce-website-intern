@@ -2,24 +2,22 @@ import Admin from "../models/admin.js";
 
 export const createAdmin = async (req, res) => {
     const {
-        _id,
         name,
         email,
-        phone_no,
+        phoneNo,
         role,
         password,
     } = req.body;
-    const Admin =  new Admin({
-        _id:_id,
+    const admin =  new Admin({
         name: name,
         email: email,
-        phone_no: phone_no,
+        phoneNo: phoneNo,
         role: role,
         password: password,
     });
 
     try {
-        await Admin.save();
+        await admin.save();
     } catch (error) {
         console.log(error.message);
         return res.status(500).send({ message: "Internal Server Error" });

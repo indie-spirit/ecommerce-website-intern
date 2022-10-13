@@ -18,5 +18,5 @@ let server = app.listen(process.env.PORT, function () {
    let host = server.address().address
    let port = server.address().port
    
-   console.log("Example app listening at 8080")
+   console.log(`Example app listening at ${process.env.PORT}`);
 })

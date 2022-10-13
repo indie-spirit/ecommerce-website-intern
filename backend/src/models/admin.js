@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const AdminSchema = new mongoose.Schema({
-    _id: {
-        type: Number,
-        required: true
-    },
     name: {
        type: String,
        required: true
@@ -13,7 +9,7 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone_no: {
+    phoneNo: {
         type: Number,
         required: true
     },
