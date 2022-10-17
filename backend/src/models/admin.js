@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const AdminSchema = new mongoose.Schema({
     name: {
@@ -23,6 +24,17 @@ const AdminSchema = new mongoose.Schema({
     }
 });
 
+AdminSchema.pre('save', async function(next){
+    try{
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(this.password, salt)
+        this.password=hashedPassword
+        next()
+    }
+    catch(error){
+     next(error);
+    }
+})
 const Admin = new mongoose.model("Admin", AdminSchema);
 
 export default Admin;
