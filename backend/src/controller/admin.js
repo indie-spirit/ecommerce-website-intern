@@ -17,10 +17,14 @@ export const createAdmin = async (req, res) => {
     });
 
     try {
+        const dbUser = await Admin.findOne({email});
+        if (dbUser) {
+            return res.status(403).json({ message: "User already exists"});
+        }
         await admin.save();
     } catch (error) {
         console.log(error.message);
-        return res.status(500).send({ message: "Internal Server Error" });
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 
     return res.status(200).send({ message: "Admin Created" });
