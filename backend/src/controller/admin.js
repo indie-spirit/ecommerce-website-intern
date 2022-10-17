@@ -25,3 +25,17 @@ export const createAdmin = async (req, res) => {
 
     return res.status(200).send({ message: "Admin Created" });
 };
+
+export const loginAdmin = async (req, res) => {
+    const {
+        email, password,
+    } = req.body; 
+    const admin = await Admin.findOne({email});
+    if (!admin) {
+        return res.status(404).send();
+    }
+    if (admin.password !== password) {
+        return res.status(400).json({ "message" : "Incorrect Password"});
+    }
+    return res.status(200).send();
+};
