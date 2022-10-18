@@ -17,7 +17,8 @@ export const createAdmin = async (req, res) => {
     });
 
     try {
-        const dbUser = await Admin.findOne({email});
+        const dbUser = await Admin.findOne({password});
+        
         if (dbUser) {
             return res.status(403).json({ message: "User already exists"});
         }
@@ -34,6 +35,7 @@ export const loginAdmin = async (req, res) => {
     const {
         email, password,
     } = req.body; 
+    console.log(email,password)
     const admin = await Admin.findOne({email});
     if (!admin) {
         return res.status(404).send();
