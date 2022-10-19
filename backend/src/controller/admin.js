@@ -1,6 +1,8 @@
 import Admin from "../models/admin.js";
+import bcrypt from "bcrypt";
 
 export const createAdmin = async (req, res) => {
+    console.log("create");
     const {
         name,
         email,
@@ -35,13 +37,32 @@ export const loginAdmin = async (req, res) => {
     const {
         email, password,
     } = req.body; 
-    console.log(email,password)
     const admin = await Admin.findOne({email});
-    if (!admin) {
-        return res.status(404).send();
+    if(!admin){
+        return res.status(404).send({"message":"Admin Not Found"});
     }
-    if (admin.password !== password) {
-        return res.status(400).json({ "message" : "Incorrect Password"});
+    const password_valid = await bcrypt.compare(password,admin.password);
+    if(password_valid){
+        return res.status(200).send({"message":"Login Success"})
     }
-    return res.status(200).send();
+    return res.status(404).send({"message":"Bad Request"});
+    
 };
+export const deleteAdmin = async (req,res) => {
+    const{
+        email
+    } = req.body;
+    const admin = await Admin.findOneAndDelete({email});
+    if(admin){
+        return res.status(200).send({"message":"Deleted"})
+    }
+    return res.status(404).send();
+}
+
+export const allUsers = async (req,res) => {
+    const admin = await Admin.find();
+    if(admin){
+        return res.status(200).send(admin)
+    }
+    return res.status(404).send();
+}
