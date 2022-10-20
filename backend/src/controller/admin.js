@@ -61,23 +61,6 @@ export const deleteAdmin = async (req,res) => {
     return res.status(404).send();
 }
 
-export const allAdmin = async (req,res) => {
-    const admin = await Admin.find();
-    if(admin){
-        return res.status(200).send(admin)
-    }
-    return res.status(404).send({"message":"No Admins Found"});
-}
-
-export const allUsers = async (req,res) => {
-    
-    const user = await User.find();
-    if(user){
-        return res.status(200).send(user);
-    }
-    return res.status(404).send({"message":"No Users Found"});
-}
-
 export const findAdmin = async (req,res) => {
    const{
     email
@@ -88,17 +71,6 @@ export const findAdmin = async (req,res) => {
    }
    return res.status(404).send({"message":"Admin Not Found"});
 
-}
-
-export const findUser = async (req,res) => {
-    const{
-        email
-    } = req.body;
-    const user = await User.findOne({email});
-    if(user){
-        return res.status(200).send(user)
-    }
-    return res.status(404).send({"message":"User Not Found"});
 }
 
 export const searchProduct = async (req,res) => {

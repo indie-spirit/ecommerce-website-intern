@@ -53,6 +53,17 @@ export const loginUser = async (req, res) => {
     
 };
 
+export const findUser = async (req, res) => {
+    const{
+        email
+    } = req.body;
+    const user = await User.findOne({email});
+    if(user){
+        return res.status(200).send(user)
+    }
+    return res.status(404).send({"message":"User Not Found"});
+}
+
 export const updateUser =  async (req,res) => {
     const {
             email,name,address,age,phoneNo,password      
