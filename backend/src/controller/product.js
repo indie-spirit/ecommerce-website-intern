@@ -56,3 +56,14 @@ export const deleteProduct = async (req,res) => {
     }
     return res.status(404).send({"message":"Product not Found"});
 }
+
+export const searchProduct  = async (req,res) => {
+    const{
+        name
+    } = req.body;
+    const product = await Product.find({name});
+    if(product){
+        return res.status(200).send(product);
+    }
+    return res.status(404).send({"message":"Product Not Found"});
+}
