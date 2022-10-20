@@ -1,6 +1,4 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-MONGO_URL="mongodb://localhost:27017"
-PORT=8080
 # dependencies
 /node_modules
 /.pnp
