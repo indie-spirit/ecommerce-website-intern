@@ -2,6 +2,7 @@ import Admin from "../models/admin.js";
 import bcrypt from "bcrypt";
 import User from "../models/user.js";
 import Product from "../models/product.js";
+import { generateToken } from "../modules/auth.js";
 
 export const createAdmin = async (req, res) => {
     console.log("create");
@@ -24,15 +25,18 @@ export const createAdmin = async (req, res) => {
         const dbUser = await Admin.findOne({email});
         
         if (dbUser) {
-            return res.status(403).json({ message: "User already exists"});
+            return res.status(409).json({ message: "User already exists"});
         }
         await admin.save();
+        const jwt = generateToken({ name, role });
+        return res.status(200).json({
+            message: "Admin Created",
+            accessToken: jwt
+        });
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ message: "Internal Server Error" });
     }
-
-    return res.status(200).send({ message: "Admin Created" });
 };
 
 export const loginAdmin = async (req, res) => {
@@ -45,10 +49,16 @@ export const loginAdmin = async (req, res) => {
     }
     const passwordValid = await bcrypt.compare(password, admin.password);
     if(passwordValid){
-        return res.status(200).send({ "message": "Login Success" });
+        const { name, role } = admin;
+        const jwt = generateToken({ name, role });
+        return res.status(200).json({
+            "message": "Login Success",
+            "accessToken": jwt
+        });
     }
     return res.status(400).send({ "message": "Password incorrect" });  
 };
+
 export const deleteAdmin = async (req,res) => {
     const{
         email
