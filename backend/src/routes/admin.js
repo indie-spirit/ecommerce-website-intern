@@ -8,11 +8,12 @@ import {
     deleteUser,
     addUser,
  } from "../controller/admin.js";
+import { isLoggedIn } from "../middlewares/authentication.js";
 
 const router = Router();
 
-router.post("/", createAdmin);
-router.delete("/", deleteAdmin);
+router.post("/", isLoggedIn, createAdmin);
+router.delete("/", isLoggedIn, deleteAdmin);
 router.get("/", findAdmin);
 
 router.post("/login", loginAdmin);

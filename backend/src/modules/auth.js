@@ -5,7 +5,12 @@ export const generateToken = (payload) => {
 }
 
 export const verifyToken = (token) => {
-    return jwt.verify(payload, process.env.JWT_SECRET);
+    try { 
+        return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
 }
 
 export const decodeToken = (token) => {
