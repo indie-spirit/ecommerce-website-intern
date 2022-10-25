@@ -41,15 +41,14 @@ export const loginUser = async (req, res) => {
         email, password,
     } = req.body; 
     const user = await User.findOne({email});
-    console.log(email);
     if(!user){
-        return res.status(404).send({"message":"User Not Found"});
+        return res.status(404).send({"message": "User Not Found"});
     }
-    const password_valid = await bcrypt.compare(password,user.password);
+    const password_valid = await bcrypt.compare(password, user.password);
     if(password_valid){
-        return res.status(200).send({"message":"Login Success"})
+        return res.status(200).send({"message":"Login Success"});
     }
-    return res.status(404).send({"message":"Bad Request"});
+    return res.status(400).send({ "message": "Invalid Password" });
     
 };
 

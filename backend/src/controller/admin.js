@@ -21,7 +21,7 @@ export const createAdmin = async (req, res) => {
     });
 
     try {
-        const dbUser = await Admin.findOne({password});
+        const dbUser = await Admin.findOne({email});
         
         if (dbUser) {
             return res.status(403).json({ message: "User already exists"});
@@ -40,15 +40,14 @@ export const loginAdmin = async (req, res) => {
         email, password,
     } = req.body; 
     const admin = await Admin.findOne({email});
-    if(!admin){
-        return res.status(404).send({"message":"Admin Not Found"});
+    if(!admin) {
+        return res.status(404).send({ "message": "Admin Not Found" });
     }
-    const password_valid = await bcrypt.compare(password, admin.password);
-    if(password_valid){
-        return res.status(200).send({"message":"Login Success"})
+    const passwordValid = await bcrypt.compare(password, admin.password);
+    if(passwordValid){
+        return res.status(200).send({ "message": "Login Success" });
     }
-    return res.status(404).send({"message":"Bad Request"});
-    
+    return res.status(400).send({ "message": "Password incorrect" });  
 };
 export const deleteAdmin = async (req,res) => {
     const{
