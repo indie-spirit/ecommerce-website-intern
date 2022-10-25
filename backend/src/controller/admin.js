@@ -43,7 +43,7 @@ export const loginAdmin = async (req, res) => {
     if(!admin){
         return res.status(404).send({"message":"Admin Not Found"});
     }
-    const password_valid = await bcrypt.compare(password,admin.password);
+    const password_valid = await bcrypt.compare(password, admin.password);
     if(password_valid){
         return res.status(200).send({"message":"Login Success"})
     }

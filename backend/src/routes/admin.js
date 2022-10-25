@@ -4,7 +4,6 @@ import {
     loginAdmin,
     deleteAdmin,
     findAdmin,
-    findUser,
     searchProduct,
     deleteUser,
     addUser,

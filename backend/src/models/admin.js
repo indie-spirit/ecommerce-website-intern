@@ -24,12 +24,12 @@ const AdminSchema = new mongoose.Schema({
     }
 });
 
-AdminSchema.pre('save', async function(next){
+AdminSchema.pre('save', async function(next) {
     try{
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(this.password, salt)
-        this.password=hashedPassword
-        next()
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = bcrypt.hash(this.password, salt);
+        this.password = hashedPassword;
+        next();
     }
     catch(error){
      next(error);
