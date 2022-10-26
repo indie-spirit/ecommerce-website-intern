@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import Product from "../models/product.js";
 import User from "../models/user.js";
+import { generateToken } from "../modules/auth.js";
 
 export const createUser = async (req, res) => {
     console.log("create");
@@ -28,6 +29,11 @@ export const createUser = async (req, res) => {
             return res.status(403).json({ message: "User already exists"});
         }
         await user.save();
+        const jwt = generateToken({ name, age });
+        return res.status(200).json({
+            message: "User Created",
+            accessToken: jwt
+        });
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({ message: "Internal Server Error" });
@@ -46,7 +52,13 @@ export const loginUser = async (req, res) => {
     }
     const password_valid = await bcrypt.compare(password, user.password);
     if(password_valid){
-        return res.status(200).send({"message":"Login Success"});
+        const { name, age } = user;
+        const jwt = generateToken({ name, age });
+        return res.status(200).json({
+            "message": "Login Success",
+            "accessToken": jwt
+        });
+        
     }
     return res.status(400).send({ "message": "Invalid Password" });
     
@@ -58,7 +70,12 @@ export const findUser = async (req, res) => {
     } = req.body;
     const user = await User.findOne({email});
     if(user){
-        return res.status(200).send(user)
+        const { name, role } = admin;
+        const jwt = generateToken({ name, role });
+        return res.status(200).json({
+            "message": "User Found",
+            "accessToken": jwt
+        });
     }
     return res.status(404).send({"message":"User Not Found"});
 }
