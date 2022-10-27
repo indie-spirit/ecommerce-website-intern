@@ -8,7 +8,8 @@ import {
     deleteUser,
     addUser,
  } from "../controller/admin.js";
-import { isLoggedIn, isAdmin } from "../middlewares/authentication.js";
+import { isLoggedIn } from "../middlewares/authentication.js";
+import { isAdmin } from "../middlewares/authorization.js";
 
 const router = Router();
 
