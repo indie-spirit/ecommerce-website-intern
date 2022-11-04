@@ -1,0 +1,27 @@
+.product-tile {
+  width: 286px;
+}
+
+.product-tile:hover {
+  box-shadow: 5px 5px black;
+}
+
+.product-tile-image {
+  height: 256px;
+  width: 256px;
+  border-radius: 1px;
+  display: block;
+  margin: auto;
+}
+
+.product-tile-name {
+  color: black;
+  font-size: 16px;
+  text-align: center;
+}
+
+.product-tile-price {
+  color: black;
+  font-size: 20px;
+  text-align: center;
+}
